@@ -9,9 +9,9 @@ def check_events(settings, screen, player_render, bullets):
     elif event.type == pygame.KEYDOWN:
       if event.key == pygame.K_RIGHT:
         player_render.move_right = True
-      if event.key == pygame.K_LEFT:
+      elif event.key == pygame.K_LEFT:
         player_render.move_left = True
-      if event.key == pygame.K_SPACE:
+      elif event.key == pygame.K_SPACE:
         new_bullets = bullet.Bullet(settings, screen, player_render)
         bullets.add(new_bullets)
     elif event.type == pygame.KEYUP:
