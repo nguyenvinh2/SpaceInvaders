@@ -21,6 +21,9 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="bullet.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="functions.py">
       <SubType>Code</SubType>
     </Compile>

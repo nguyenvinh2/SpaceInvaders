@@ -10,7 +10,7 @@ def game():
   screen = pygame.display.set_mode((game_settings.width,game_settings.height))
   pygame.display.set_caption("Space Invaders")
 
-  player_render = ship.Ship(screen)
+  player_render = ship.Ship(screen, game_settings)
 
   while True:
       functions.check_events(player_render)
