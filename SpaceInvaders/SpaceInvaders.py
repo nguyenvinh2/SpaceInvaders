@@ -11,11 +11,18 @@ def game():
   pygame.display.set_caption("Space Invaders")
 
   player_render = ship.Ship(screen, game_settings)
+  bullets = pygame.sprite.Group()
 
   while True:
-      functions.check_events(player_render)
+      functions.check_events(game_settings, screen, player_render, bullets)
       player_render.update()
-      functions.update_screen(game_settings, screen, player_render)
+      bullets.update()
+
+      for bullet in bullets.copy():
+        if bullet.rect.bottom <= 0:
+          bullets.remove(bullet)
+
+      functions.update_screen(game_settings, screen, player_render, bullets)
 
 game()
 
