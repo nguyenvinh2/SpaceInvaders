@@ -4,7 +4,9 @@
 
 ##### Classic Space Invader Game
 
-Built in Visual Studio 2017 
+Learning project w/ tutorial from 'Python Crash Course'
+
+Built in Visual Studio 2017 w/ tutorial
 
 Requires Python 3 and Pygame
 
