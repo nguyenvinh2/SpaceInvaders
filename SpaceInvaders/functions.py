@@ -34,33 +34,44 @@ def fire_bullet(settings, screen, player_render, bullets):
     new_bullets = bullet.Bullet(settings, screen, player_render)
     bullets.add(new_bullets)
 
-def update_bullets(bullets):
+def update_bullets(aliens, bullets, screen, settings):
   bullets.update()
   for bullet in bullets.copy():
     if bullet.rect.bottom <= 0:
       bullets.remove(bullet)
+  collisions = pygame.sprite.groupcollide(bullets, aliens, True, True)
+
+  if len(aliens) == 0:
+    bullets.empty()
+    alien_fleet(settings, screen, aliens)
 
 def alien_fleet(settings, screen, aliens):
   alien_init = alien.Alien(settings, screen)
-  space_x = settings.width - 2 * alien_init.rect.width
+  space_x = settings.width - 3 * alien_init.rect.width
   space_y = settings.height - 3 * alien_init.rect.height
-  alien_number = int(space_x / (2*alien_init.rect.width))
+  alien_number = int(space_x / (3*alien_init.rect.width))
   alien_rows = int(space_y/(3*alien_init.rect.height))
   
   for row in range(alien_rows):
     for alien_count in range(alien_number):
       alien_init = alien.Alien(settings, screen)
-      alien_init.x = alien_init.rect.width + 2 * alien_init.rect.width * alien_count
-      alien_init.y = alien_init.rect.height + 1.5 * alien_init.rect.height * row
+      alien_init.x = alien_init.rect.width + 3 * alien_init.rect.width * alien_count
+      alien_init.y = alien_init.rect.height + 1.25 * alien_init.rect.height * row
       alien_init.rect.x =  alien_init.x
       alien_init.rect.y = alien_init.y
       aliens.add(alien_init)
 
-def update_aliens(aliens):
+def update_aliens(settings, aliens):
+  check_fleet_edge(settings, aliens)
   aliens.update()
 
-def fleet_edge(settings, aliens):
-  for alien in aliens.sprites():
-    if alien.edge():
+def check_fleet_edge(settings, aliens):
+  for alien_init in aliens.sprites():
+    if alien_init.at_edge():
       change_fleet_direction(settings, aliens)
       break
+
+def change_fleet_direction(settings, aliens):
+  for alien_init in aliens.sprites():
+    alien_init.rect.y += settings.fleet_drop_speed
+  settings.fleet_direction *= -1
