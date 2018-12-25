@@ -22,6 +22,7 @@ def game():
       functions.check_events(game_settings, screen, player_render, bullets)
       player_render.update()
       functions.update_bullets(bullets)
+      functions.update_aliens(aliens)
       functions.update_screen(game_settings, screen, player_render, alien_group, bullets)
 
 game()
