@@ -2,6 +2,7 @@ import sys
 import pygame
 import bullet
 import alien
+import time
 
 def check_events(settings, screen, player_render, bullets):
   for event in pygame.event.get():
@@ -61,9 +62,12 @@ def alien_fleet(settings, screen, aliens):
       alien_init.rect.y = alien_init.y
       aliens.add(alien_init)
 
-def update_aliens(settings, aliens):
+def update_aliens(settings, stats, player_render, aliens, screen, bullets):
   check_fleet_edge(settings, aliens)
   aliens.update()
+  if pygame.sprite.spritecollideany(player_render, aliens):
+    ship_hit(settings, stats, screen, player_render, aliens, bullets)
+  aliens_bottom(settings, stats, screen, player_render, aliens, bullets)
 
 def check_fleet_edge(settings, aliens):
   for alien_init in aliens.sprites():
@@ -75,3 +79,20 @@ def change_fleet_direction(settings, aliens):
   for alien_init in aliens.sprites():
     alien_init.rect.y += settings.fleet_drop_speed
   settings.fleet_direction *= -1
+
+def ship_hit(settings, stats, screen, ship, aliens, bullets):
+  if stats.ships > 0:
+    stats.ships -= 1
+    aliens.empty()
+    bullets.empty()
+    alien_fleet(settings, screen, aliens)
+    time.sleep(1)
+  else:
+    stats.game_active = False
+
+def aliens_bottom(settings, stats, screen, ship, aliens, bullets):
+  screen_rect = screen.get_rect()
+  for alien_init in aliens.sprites():
+    if alien_init.rect.bottom >= screen_rect.bottom:
+      ship_hit(settings, stats, screen, ship, aliens, bullets)
+      break

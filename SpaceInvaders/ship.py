@@ -21,5 +21,8 @@ class Ship():
     
     self.rect.centerx = self.center
 
+  def reset_ship(self):
+    self.center = self.screen_rect.centerx
+
   def blitme(self):
     self.screen.blit(self.image, self.rect)

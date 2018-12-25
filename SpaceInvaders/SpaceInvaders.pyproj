@@ -37,6 +37,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="SpaceInvaders.py" />
+    <Compile Include="statistics.py">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="assets\" />

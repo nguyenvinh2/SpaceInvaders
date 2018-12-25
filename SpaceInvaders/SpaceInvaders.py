@@ -4,13 +4,14 @@ import settings
 import ship
 import alien
 import functions
+import statistics
 
 def game():
   pygame.init()
   game_settings = settings.Settings()
   screen = pygame.display.set_mode((game_settings.width,game_settings.height))
   pygame.display.set_caption("Space Invaders")
-
+  stats = statistics.GameStats(game_settings)
   player_render = ship.Ship(screen, game_settings)
   bullets = pygame.sprite.Group()
   #aliens = alien.Alien(game_settings, screen)
@@ -20,9 +21,10 @@ def game():
 
   while True:
       functions.check_events(game_settings, screen, player_render, bullets)
-      player_render.update()
-      functions.update_bullets(alien_group, bullets, screen, game_settings)
-      functions.update_aliens(game_settings, alien_group)
+      if stats.game_active:
+        player_render.update()
+        functions.update_bullets(alien_group, bullets, screen, game_settings)
+        functions.update_aliens(game_settings, stats, player_render, alien_group, screen, bullets)
       functions.update_screen(game_settings, screen, player_render, alien_group, bullets)
 
 game()

@@ -11,6 +11,8 @@ class Settings():
     self.bullet_color = 255,255,255
     self.max_bullets = 10
 
-    self.alien_speed = .35
+    self.alien_speed = .5
     self.fleet_drop_speed = 10
     self.fleet_direction = 1
+
+    self.ship_limit = 3
