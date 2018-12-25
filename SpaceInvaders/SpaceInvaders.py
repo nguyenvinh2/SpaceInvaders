@@ -2,6 +2,7 @@ import sys
 import pygame
 import settings
 import ship
+import alien
 import functions
 
 def game():
@@ -12,17 +13,16 @@ def game():
 
   player_render = ship.Ship(screen, game_settings)
   bullets = pygame.sprite.Group()
+  aliens = alien.Alien(game_settings, screen)
+  alien_group = pygame.sprite.Group()
+
+  functions.alien_fleet(game_settings, screen, alien_group)
 
   while True:
       functions.check_events(game_settings, screen, player_render, bullets)
       player_render.update()
-      bullets.update()
-
-      for bullet in bullets.copy():
-        if bullet.rect.bottom <= 0:
-          bullets.remove(bullet)
-
-      functions.update_screen(game_settings, screen, player_render, bullets)
+      functions.update_bullets(bullets)
+      functions.update_screen(game_settings, screen, player_render, alien_group, bullets)
 
 game()
 
