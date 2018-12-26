@@ -37,12 +37,13 @@ def check_play_button(stats, play_button, mouse_x, mouse_y, settings, screen, al
     stats.game_active = True
     pygame.mouse.set_visible(False)
 
-def update_screen(game_settings, screen, player_render, aliens, bullets, play_button, stats):
+def update_screen(game_settings, screen, player_render, aliens, bullets, play_button, stats, scoreboard):
   screen.fill(game_settings.background_color)
   for bullet in bullets.sprites():
     bullet.draw_bullet()
   player_render.blitme()
   aliens.draw(screen)
+  scoreboard.show_score()
   if not stats.game_active:
     play_button.draw_button()
   pygame.display.flip()
@@ -53,16 +54,21 @@ def fire_bullet(settings, screen, player_render, bullets):
     bullets.add(new_bullets)
 
 
-def update_bullets(aliens, bullets, screen, settings):
+def update_bullets(aliens, bullets, screen, settings, scoreboard, stats):
   bullets.update()
   for bullet in bullets.copy():
     if bullet.rect.bottom <= 0:
       bullets.remove(bullet)
   collisions = pygame.sprite.groupcollide(bullets, aliens, True, True)
+  if collisions:
+    for alien_init in collisions.values():
+      stats.score += settings.points
+      scoreboard.prep_score()
 
   if len(aliens) == 0:
     bullets.empty()
     settings.increase_difficulty()
+    print(settings.alien_speed)
     alien_fleet(settings, screen, aliens)
 
 

@@ -33,6 +33,9 @@
     <Compile Include="play.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="score.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="settings.py">
       <SubType>Code</SubType>
     </Compile>
