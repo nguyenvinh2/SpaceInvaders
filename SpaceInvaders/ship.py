@@ -1,7 +1,8 @@
 import pygame
 
-class Ship():
+class Ship(pygame.sprite.Sprite):
   def __init__(self, screen, settings):
+    super(Ship, self).__init__()
     self.screen = screen
     self.settings = settings
     self.image = pygame.image.load('assets/rsz_ship.jpg')

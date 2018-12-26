@@ -23,11 +23,11 @@ def game():
   functions.alien_fleet(game_settings, screen, alien_group)
 
   while True:
-      functions.check_events(game_settings, screen, player_render, bullets, play_button, stats, alien_group)
+      functions.check_events(game_settings, screen, player_render, bullets, play_button, stats, alien_group, scoreboard)
       if stats.game_active:
         player_render.update()
         functions.update_bullets(alien_group, bullets, screen, game_settings, scoreboard, stats)
-        functions.update_aliens(game_settings, stats, player_render, alien_group, screen, bullets)
+        functions.update_aliens(game_settings, stats, player_render, alien_group, screen, bullets, scoreboard)
       functions.update_screen(game_settings, screen, player_render, alien_group, bullets, play_button, stats, scoreboard)
 
 game()
