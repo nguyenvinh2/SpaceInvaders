@@ -3,8 +3,9 @@ import pygame
 import bullet
 import alien
 import time
+import play
 
-def check_events(settings, screen, player_render, bullets):
+def check_events(settings, screen, player_render, bullets, play_button, stats):
   for event in pygame.event.get():
     if event.type == pygame.KEYDOWN:
       if event.key == pygame.K_RIGHT:
@@ -21,13 +22,23 @@ def check_events(settings, screen, player_render, bullets):
       player_render.move_right = False
       player_render.move_left = False
       player_render.fire = False
+    elif event.type == pygame.MOUSEBUTTONDOWN:
+      mouse_x, mouse_y = pygame.mouse.get_pos()
+      check_play_button(stats, play_button, mouse_x, mouse_y)
 
-def update_screen(game_settings, screen, player_render, aliens, bullets):
+def check_play_button(stats, play_button, mouse_x, mouse_y):
+  button_clicked = play_button.rect.collidepoint(mouse_x, mouse_y)
+  if button_clicked and not stats.game_active:
+    stats.game_active = True
+
+def update_screen(game_settings, screen, player_render, aliens, bullets, play_button, stats):
   screen.fill(game_settings.background_color)
   for bullet in bullets.sprites():
     bullet.draw_bullet()
   player_render.blitme()
   aliens.draw(screen)
+  if not stats.game_active:
+    play_button.draw_button()
   pygame.display.flip()
 
 def fire_bullet(settings, screen, player_render, bullets):

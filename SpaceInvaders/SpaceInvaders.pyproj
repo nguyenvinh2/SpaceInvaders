@@ -30,6 +30,9 @@
     <Compile Include="functions.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="play.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="settings.py">
       <SubType>Code</SubType>
     </Compile>
