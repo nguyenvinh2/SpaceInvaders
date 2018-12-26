@@ -28,6 +28,7 @@ def check_events(settings, screen, player_render, bullets, play_button, stats, a
 
 def check_play_button(stats, play_button, mouse_x, mouse_y, settings, screen, aliens, bullets, ship, scoreboard):
   if play_button.rect.collidepoint(mouse_x, mouse_y) and not stats.game_active:
+    settings.space_increase = 0
     settings.init_dyn_settings()
     stats.reset_stats()
     alien_fleet(settings, screen, aliens)
@@ -71,6 +72,7 @@ def update_bullets(aliens, bullets, screen, settings, scoreboard, stats):
     check_high_score(stats, scoreboard)
 
   if len(aliens) == 0:
+    settings.space_increase += .15
     bullets.empty()
     settings.increase_difficulty()
     stats.level += 1
@@ -81,15 +83,15 @@ def update_bullets(aliens, bullets, screen, settings, scoreboard, stats):
 def alien_fleet(settings, screen, aliens):
   alien_init = alien.Alien(settings, screen)
   space_x = settings.width - 3 * alien_init.rect.width
-  space_y = settings.height - 3 * alien_init.rect.height
+  space_y = settings.height - (3+settings.space_increase) * alien_init.rect.height
   alien_number = int(space_x / (3*alien_init.rect.width))
-  alien_rows = int(space_y/(3*alien_init.rect.height))
+  alien_rows = int(space_y/((3+settings.space_increase)*alien_init.rect.height))
   
   for row in range(alien_rows):
     for alien_count in range(alien_number):
       alien_init = alien.Alien(settings, screen)
       alien_init.x = alien_init.rect.width + 3 * alien_init.rect.width * alien_count
-      alien_init.y = alien_init.rect.height + 1.25 * alien_init.rect.height * row
+      alien_init.y = alien_init.rect.height + (1.25+settings.space_increase) * alien_init.rect.height * row
       alien_init.rect.x =  alien_init.x
       alien_init.rect.y = alien_init.y
       aliens.add(alien_init)

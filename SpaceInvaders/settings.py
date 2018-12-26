@@ -17,10 +17,12 @@ class Settings():
 
     self.ship_limit = 2
 
-    self.speedup = 1.15
+    self.speedup = 1.1
     self.init_dyn_settings()
 
     self.increase_score = 10
+
+    self.space_increase = 0
 
   def init_dyn_settings(self):
     self.ship_speed = .8
@@ -31,5 +33,6 @@ class Settings():
 
   def increase_difficulty(self):
     self.alien_speed *= self.speedup
+    self.ship_speed += .15
+    self.bullet_speed += .15
     self.points += self.increase_score
-    print(self.points)

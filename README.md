@@ -2,9 +2,13 @@
 
 ## Introduction
 
-##### Classic Space Invader Game
-
 Learning project w/ tutorial from 'Python Crash Course'
+
+Destroy as many waves of alien invaders as you can. 
+
+The more waves you destroy, the faster they'll come at you.
+
+##### Classic Space Invader Game
 
 Built in Visual Studio 2017 w/ tutorial
 
@@ -15,4 +19,7 @@ Standalone project: Cloned the repo and run in Visual Studios. If using another 
 ## Output
 
 ![Console](SpaceInvaders/assets/Capture.PNG)
+
+![Console2](SpaceInvaders/assets/Capture2.PNG)
+
 
