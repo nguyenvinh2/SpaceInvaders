@@ -5,7 +5,7 @@ import alien
 import time
 import play
 
-def check_events(settings, screen, player_render, bullets, play_button, stats):
+def check_events(settings, screen, player_render, bullets, play_button, stats, aliens):
   for event in pygame.event.get():
     if event.type == pygame.KEYDOWN:
       if event.key == pygame.K_RIGHT:
@@ -24,12 +24,18 @@ def check_events(settings, screen, player_render, bullets, play_button, stats):
       player_render.fire = False
     elif event.type == pygame.MOUSEBUTTONDOWN:
       mouse_x, mouse_y = pygame.mouse.get_pos()
-      check_play_button(stats, play_button, mouse_x, mouse_y)
+      check_play_button(stats, play_button, mouse_x, mouse_y, settings, screen, aliens, bullets, player_render)
 
-def check_play_button(stats, play_button, mouse_x, mouse_y):
-  button_clicked = play_button.rect.collidepoint(mouse_x, mouse_y)
-  if button_clicked and not stats.game_active:
+def check_play_button(stats, play_button, mouse_x, mouse_y, settings, screen, aliens, bullets, ship):
+  if play_button.rect.collidepoint(mouse_x, mouse_y) and not stats.game_active:
+    settings.init_dyn_settings()
+    stats.reset_stats()
+    aliens.empty()
+    bullets.empty()
+    alien_fleet(settings, screen, aliens)
+    ship.reset_ship()
     stats.game_active = True
+    pygame.mouse.set_visible(False)
 
 def update_screen(game_settings, screen, player_render, aliens, bullets, play_button, stats):
   screen.fill(game_settings.background_color)
@@ -46,6 +52,7 @@ def fire_bullet(settings, screen, player_render, bullets):
     new_bullets = bullet.Bullet(settings, screen, player_render)
     bullets.add(new_bullets)
 
+
 def update_bullets(aliens, bullets, screen, settings):
   bullets.update()
   for bullet in bullets.copy():
@@ -55,7 +62,9 @@ def update_bullets(aliens, bullets, screen, settings):
 
   if len(aliens) == 0:
     bullets.empty()
+    settings.increase_difficulty()
     alien_fleet(settings, screen, aliens)
+
 
 def alien_fleet(settings, screen, aliens):
   alien_init = alien.Alien(settings, screen)
@@ -100,6 +109,7 @@ def ship_hit(settings, stats, screen, ship, aliens, bullets):
     time.sleep(1)
   else:
     stats.game_active = False
+    pygame.mouse.set_visible(True)
 
 def aliens_bottom(settings, stats, screen, ship, aliens, bullets):
   screen_rect = screen.get_rect()

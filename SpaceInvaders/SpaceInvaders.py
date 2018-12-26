@@ -16,13 +16,12 @@ def game():
   stats = statistics.GameStats(game_settings)
   player_render = ship.Ship(screen, game_settings)
   bullets = pygame.sprite.Group()
-  #aliens = alien.Alien(game_settings, screen)
   alien_group = pygame.sprite.Group()
 
   functions.alien_fleet(game_settings, screen, alien_group)
 
   while True:
-      functions.check_events(game_settings, screen, player_render, bullets, play_button, stats)
+      functions.check_events(game_settings, screen, player_render, bullets, play_button, stats, alien_group)
       if stats.game_active:
         player_render.update()
         functions.update_bullets(alien_group, bullets, screen, game_settings)

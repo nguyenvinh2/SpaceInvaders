@@ -15,4 +15,16 @@ class Settings():
     self.fleet_drop_speed = 10
     self.fleet_direction = 1
 
-    self.ship_limit = 3
+    self.ship_limit = 0
+
+    self.speedup = 1.1
+    self.init_dyn_settings()
+
+  def init_dyn_settings(self):
+    self.ship_speed = .8
+    self.bullet_speed = 1
+    self.alien_speed = .5
+    self.fleet_direction = 1
+
+  def increase_difficulty(self):
+    self.alien_speed *= self.speedup 
